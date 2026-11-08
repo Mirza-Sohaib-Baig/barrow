@@ -63,6 +63,16 @@ A running log of what was chosen, what was cut, and why. Newest at the bottom wi
 - Primary keys are UUIDs. Owned shopper rows cascade on user delete. Orders and ordered products restrict. Optional review and contact links set null.
 - `addresses.line2`, `categories.parentId`, `categories.imageUrl`, and `products.searchVector` are nullable. Contact requests default to status `open`. A wishlist row is unique per user and product. Guest cart and view-history rows are indexed on `sessionKey`.
 
+## 2026-11-09, query layer
+
+- With no search text, relevance order is rating, then review count. Text search uses `plainto_tsquery('english')`.
+- A department filter includes products filed under its child categories.
+- A deal is a list price strictly above the current price. Price history is not in the schema yet.
+- Facet counts are one statement. Each arm drops that facet's own filter and keeps the others. Rating buckets are 4, 3, 2 and 1 stars and up.
+- Suggestions rank with `similarity` and `word_similarity`, and ignore a query shorter than two characters.
+- Review sorts are newest, highest, lowest and helpful, ten to a page. The histogram filter is an exact star.
+- Catalogue reads use the `hours` cache profile, tagged `catalogue`, plus `category:{slug}` and `product:{slug}` when those are known. Recently viewed is not cached.
+
 ## 2026-11-09, brand
 
 - The wordmark is an inline SVG: the barrow is paths, the letters are SVG text in Fraunces, at 28px and 40px.
@@ -82,7 +92,7 @@ A running log of what was chosen, what was cut, and why. Newest at the bottom wi
 
 ## 2026-11-09, home and category
 
-- The home page paints the hero, the eight department tiles and today's deals together. Each rail below that has its own Suspense boundary. Recently viewed is kept inside the 100 card budget, so eight department rails show 10 cards rather than the 11 `getHomeData` allocates.
+- The home page paints the hero, the eight department tiles and today's deals together. Each rail below that has its own Suspense boundary. Rail lengths come from `homeCards`: 12 deals, 8 per department, 8 recently viewed, which stays inside the 100 card budget.
 - A department rail is omitted when that department has no products. Before any categories are imported, the eight names in `config.departments` are the tiles.
 - The breadcrumb root is "Shop", so it does not collide with the Home department.
 - Recently viewed reads the `barrow_guest` cookie. Signed-in history waits for sessions. The query still requires an owner and returns nothing without one.

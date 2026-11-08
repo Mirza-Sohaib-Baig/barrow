@@ -96,7 +96,7 @@ step scale, tabular numerals. Semantic tokens for price, savings, stock states, 
 wordmark. App shell: header with search, theme toggle, account menu, wishlist, cart count.
 Category strip. Footer with the unaffiliated notice. Mobile sheet at 375px.
 
-### A2: query layer `[pending]`
+### A2: query layer `[done]`
 `lib/queries/products.ts`: `getProductCards`, `getFacets`, `getProductBySlug`, `getHomeData`,
 `getSuggestions`. `lib/queries/reviews.ts`: `getReviews`, `getRatingHistogram`. All catalogue
 reads wrapped in `'use cache'` with a per-category tag and a global `catalogue` tag.

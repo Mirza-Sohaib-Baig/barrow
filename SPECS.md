@@ -22,14 +22,18 @@ hour 14.
 
 ## Step-04, catalogue import
 
-**Does.** Fetches, transforms and loads the Amazon Reviews 2023 dataset into products,
-categories, reviews, `productTopics` and `pricePoints`. Runs from `npm run import`.
+**Does.** Downloads, transforms and loads whole small categories from the Amazon Reviews 2023
+dataset into categories, products and reviews, joined on `parent_asin`. Full detail and the
+prompt are in `DATA.md`. Runs from `npm run import`.
 
-**Proves.** Row counts reported per table and per category. Between 8,000 and 10,000 products,
-each with at least one image, a parseable price and three or more reviews. `data/README.md`
-records the source and licence.
+**Proves.** Row counts reported per table and per category. Between 3,000 and 4,000 products,
+each with a usable image, a parsed price and three or more of its own real reviews. Every
+product's stored `ratingAverage` agrees with the reviews actually inserted. `data/README.md`
+records the source, citation, licence and the fact that reviewer identities were not imported.
 
-**Not.** Nothing user-facing. Runs once, locally, against the production database.
+**Not.** No re-association of reviews to products they do not belong to, and no generated
+review prose. No Electronics, Cell Phones, Books, Clothing or Home and Kitchen: their review
+files run to tens of gigabytes.
 
 ---
 
