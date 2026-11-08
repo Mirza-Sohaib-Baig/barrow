@@ -104,12 +104,12 @@ reads wrapped in `'use cache'` with a per-category tag and a global `catalogue` 
 **Performance constraint:** `getHomeData` returns at most 100 product cards in total across all
 rails. Unit tests for filter and sort clause building.
 
-### A3: product card and grid `[pending]`
+### A3: product card and grid `[done]`
 `product-card`, `product-card-skeleton` at matching dimensions, `product-grid`, `product-rail`,
 `star-rating`, `price`. A `/dev/components` route showing every state including out of stock, no
 list price, long title, zero reviews.
 
-### A4: home and category `[pending]`
+### A4: home and category `[done]`
 Home with hero, category tiles, deals rail, recently viewed, one rail per category. Everything
 below the fold lazy and inside its own Suspense boundary. Category browse at `/c/[...slug]` with
 breadcrumb, sidebar, grid, sort, pagination. All filter state in searchParams.

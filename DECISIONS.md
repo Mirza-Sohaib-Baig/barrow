@@ -71,3 +71,21 @@ A running log of what was chosen, what was cut, and why. Newest at the bottom wi
 - Department names in the strip are placeholders in `lib/config.ts` until the catalogue import.
 - The header search has a visually hidden label. A stacked label would break the single search row.
 
+## 2026-11-09, product card
+
+- The card type in `lib/product-card.ts` matches the query card: id, slug, title, image, prices in pence, rating, review count and stock. The helpers sit beside it so a card does not import the database.
+- Wishlist and add to cart are client buttons outside the card link. They only toggle local state until the cart and wishlist actions exist.
+- Add to cart on a card is an outline button. A grid should not be a row of indigo primary buttons.
+- Stars snap to the nearest half. The number beside them stays one decimal place.
+- The stock line keeps its height when stock is healthy, so a row of cards and the skeleton stay the same height.
+- shadcn primitives import `cn`. That name resolves to `lib/utils.ts` through the TypeScript and Vitest path aliases.
+
+## 2026-11-09, home and category
+
+- The home page paints the hero, the eight department tiles and today's deals together. Each rail below that has its own Suspense boundary. Recently viewed is kept inside the 100 card budget, so eight department rails show 10 cards rather than the 11 `getHomeData` allocates.
+- A department rail is omitted when that department has no products. Before any categories are imported, the eight names in `config.departments` are the tiles.
+- The breadcrumb root is "Shop", so it does not collide with the Home department.
+- Recently viewed reads the `barrow_guest` cookie. Signed-in history waits for sessions. The query still requires an owner and returns nothing without one.
+- When a category is empty, the named filter is the price band, then a brand, then the star rating, then in-stock. The clear link removes only that one. Sort defaults to `relevance`, shown as "Featured", and is left out of the URL.
+- Product photos may come from any http or https host. The import has not named its image hosts yet.
+
