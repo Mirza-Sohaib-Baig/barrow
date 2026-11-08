@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npm:run typecheck)",
+      "Shell(npm:run build)",
+      "Shell(npm:run test)",
+      "Shell(npm:test)",
+      "Shell(npm:run lint)",
+      "Shell(npm:run db:generate)",
+      "Shell(npm:run db:validate)",
+      "Shell(npm:install)",
+      "Shell(npm:install -w apps/web @prisma/adapter-pg pg dotenv)",
+      "Shell(npm:install -D -w apps/web @types/pg vitest)",
+      "Shell(npm:install -D -w packages/domain vitest typescript)",
+      "Shell(npx:tsc --noEmit)",
+      "Shell(npx:tsc --noEmit -p apps/web)",
+      "Shell(npx:tsc --noEmit -p packages/domain)"
+    ],
+    "deny": [
+      "Shell(npx:prisma migrate*)",
+      "Shell(npx:prisma db*)",
+      "Shell(npm:run db:push*)",
+      "Shell(npm:run db:reset*)",
+      "Shell(rm)",
+      "Shell(del)",
+      "Shell(Remove-Item)",
+      "Shell(git)",
+      "Shell(curl)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Write(**/.env)",
+      "Write(**/.env.local)",
+      "Write(.cursor/**)",
+      "Write(.agent-logs/**)"
+    ]
+  }
+}

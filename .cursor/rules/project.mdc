@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+---
+
+PROJECT
+Barrow, a department store web app. A rebuild of Amazon's buyer experience with its own brand and interface, built as a 20-hour technical assessment. Next.js 16 App Router, strict TypeScript, Tailwind 4, Drizzle, Neon Postgres, Stripe test mode, Vercel.
+
+HOW WE WORK
+- Read `roadmap.md` at the start of every session. Work the single next slice marked pending. Never work two slices in one session. Never add a slice to the roadmap yourself; propose it to me instead.
+- Before coding a slice, read its spec in `docs/specs/`. If there is no spec, write a four-line one and show it to me before coding.
+- End every slice with: `npm run typecheck`, `npm run lint`, `npm run build`, `npm test`. All four pass before you report done.
+- At the end of a slice, mark it `[done]` in `roadmap.md` and append a dated one-line entry to `DECISIONS.md` for any choice you made that was not specified.
+
+ARCHITECTURE
+- Server Components by default. `'use client'` only on small leaf components that need state or events.
+- Catalogue reads use `'use cache'` with explicit cache tags. Cart, orders and account are always dynamic.
+- All reads live in `lib/queries/<domain>.ts`. All writes are server actions in `actions/<domain>.ts`. Components never touch the database directly.
+- Every action validates with Zod and returns `{ ok: true, data } | { ok: false, error }`.
+- Every query or action that touches shopper data takes the session user id and filters on ownership. No exceptions.
+- Money is integer pence. Never float. All totals computed server side by `lib/pricing.ts`, which is a pure function with unit tests.
+- All tunable values in `lib/config.ts`.
+
+UI
+- shadcn/ui primitives in `components/ui/`, domain components grouped in `components/<domain>/`.
+- Every list has a loading skeleton, an empty state with a useful action, and an error state. Never a bare spinner.
+- Every page works at 375px. Check before reporting done.
+- Keyboard reachable, visible focus ring, alt text, `aria-label` on icon buttons.
+- Light and dark themes, both defined in tokens, both checked for contrast.
+
+CODE
+- No `any`. No comments restating code. No emoji anywhere in code or UI.
+- If a component takes more than six props, split it.
+- Never install a package without saying why.
+
+REPORTING
+End every session with: the slice completed, files added, files changed, anything you did differently and why, and what the next pending slice is.
