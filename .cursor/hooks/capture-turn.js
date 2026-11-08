@@ -61,10 +61,23 @@ function safeId(value) {
   return id || "unknown";
 }
 
+function normalizeRoot(root) {
+  if (typeof root !== "string") return "";
+  const trimmed = root.trim();
+  if (!trimmed) return "";
+  // Cursor sends Windows roots as /c:/Project, which Node joins to \c:\Project.
+  const msys = /^[\\/]([a-zA-Z]):[\\/](.*)$/.exec(trimmed);
+  if (!msys) return trimmed;
+  return `${msys[1].toUpperCase()}:\\${msys[2].replace(/\//g, "\\")}`;
+}
+
 function workspaceRoot(payload) {
   const roots = Array.isArray(payload.workspace_roots) ? payload.workspace_roots : [];
-  const first = roots.find((root) => typeof root === "string" && root.trim());
-  return first ? first : process.cwd();
+  for (const candidate of roots) {
+    const normalized = normalizeRoot(candidate);
+    if (normalized && fs.existsSync(normalized)) return normalized;
+  }
+  return process.cwd();
 }
 
 function stateDir(root) {
@@ -94,7 +107,8 @@ function writeJson(file, value) {
 
 function logError(root, error) {
   try {
-    const dir = stateDir(root || process.cwd());
+    const base = root && fs.existsSync(root) ? root : process.cwd();
+    const dir = stateDir(base);
     fs.mkdirSync(dir, { recursive: true });
     const line = `${nowIso()} ${error && error.stack ? error.stack : error}\n`;
     fs.appendFileSync(path.join(dir, "errors.log"), line, "utf8");
