@@ -90,7 +90,7 @@ run.
 
 ## Set A: discovery
 
-### A1: brand and chrome `[pending]`
+### A1: brand and chrome `[done]`
 Theme tokens for light and dark in `app/globals.css`, documented in `DESIGN.md`. Two fonts, six-
 step scale, tabular numerals. Semantic tokens for price, savings, stock states, rating. SVG
 wordmark. App shell: header with search, theme toggle, account menu, wishlist, cart count.

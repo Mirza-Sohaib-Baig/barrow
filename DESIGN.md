@@ -228,8 +228,7 @@ be fully rounded when it is a pill. Nothing else deviates.
 dialogs. Resting cards have a border, not a shadow. Shadows on everything is the fastest way to
 look like a 2016 dashboard.
 
-In dark mode, drop both shadows almost entirely and lean on `--border` and the lighter `--card`
-surface for separation. Shadows do not read on dark grounds.
+In dark mode, `--shadow-raise` is removed and separation comes from `--border` and the lighter `--card`. `--shadow-float` stays as `0 8px 24px oklch(0 0 0 / 0.4)` so menus and sheets still lift off the page.
 
 ## Motion
 

@@ -62,3 +62,12 @@ A running log of what was chosen, what was cut, and why. Newest at the bottom wi
 - `productTopics` and `pricePoints` are not in this table list, so they wait for the review-intelligence and price-history slices.
 - Primary keys are UUIDs. Owned shopper rows cascade on user delete. Orders and ordered products restrict. Optional review and contact links set null.
 - `addresses.line2`, `categories.parentId`, `categories.imageUrl`, and `products.searchVector` are nullable. Contact requests default to status `open`. A wishlist row is unique per user and product. Guest cart and view-history rows are indexed on `sessionKey`.
+
+## 2026-11-09, brand
+
+- The wordmark is an inline SVG: the barrow is paths, the letters are SVG text in Fraunces, at 28px and 40px.
+- Theme persistence uses `next-themes`, which was already installed. The default is the system preference.
+- The header cart badge takes a count and shows 0 until the cart slice exists.
+- Department names in the strip are placeholders in `lib/config.ts` until the catalogue import.
+- The header search has a visually hidden label. A stacked label would break the single search row.
+

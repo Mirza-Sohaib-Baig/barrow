@@ -28,4 +28,14 @@ export const config = {
     outForDelivery: 48,
     delivered: 72,
   },
+  departments: [
+    { slug: "home", label: "Home" },
+    { slug: "kitchen", label: "Kitchen" },
+    { slug: "clothing", label: "Clothing" },
+    { slug: "beauty", label: "Beauty" },
+    { slug: "electronics", label: "Electronics" },
+    { slug: "garden", label: "Garden" },
+    { slug: "toys", label: "Toys" },
+    { slug: "sports", label: "Sports" },
+  ],
 } as const;
