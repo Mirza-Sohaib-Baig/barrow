@@ -1,0 +1,12 @@
+---
+description: Leave the automatic agent capture log untouched
+alwaysApply: true
+---
+
+# Agent capture log
+
+Prompt and response capture is installed as a Cursor project hook in `.cursor/hooks.json`. It runs on its own. Do not manually append, rewrite, summarize, tidy, or delete entries in `.agent-logs/`.
+
+Do not add `.agent-logs/` to `.gitignore`. Runtime hook state under `.cursor/hooks/.state/` is local and stays untracked.
+
+`CAPTURE-TEST.md` is written only after a canary in this session and a canary in a second session have both landed in `.agent-logs/`. Do not start the assignment build before that check.
