@@ -22,4 +22,10 @@ export const config = {
   cancelWindowHours: 24,
   returnWindowDays: 30,
   pageSize: 24,
+  orderStatusHours: {
+    packed: 4,
+    shipped: 24,
+    outForDelivery: 48,
+    delivered: 72,
+  },
 } as const;

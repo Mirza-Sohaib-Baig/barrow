@@ -59,7 +59,7 @@ to and is not gitignored. Nothing else starts until this is true.
 ### Step-01: rules files `[done]`
 `AGENTS.md`, `.cursor/rules/project.mdc` with `alwaysApply: true`.
 
-### Step-02: scaffold `[pending]`
+### Step-02: scaffold `[done]`
 Next.js 16 App Router, strict TypeScript, Tailwind 4, `cacheComponents` on. shadcn/ui primitives.
 Folder skeleton. `lib/db.ts`, `lib/config.ts`, `lib/format.ts`. `.env.example`. Package scripts.
 Placeholder home page.
@@ -67,7 +67,7 @@ Placeholder home page.
 **Human, by hand:** git init, public GitHub repo, Neon project, Vercel project, environment
 variables, first deploy. Open the live URL in an incognito window.
 
-### Step-03: schema `[pending]`
+### Step-03: schema `[done]`
 Drizzle schema for users, sessions, addresses, categories, products, reviews, cartItems,
 wishlistItems, orders, orderItems, contactRequests, viewHistory, productTopics, pricePoints.
 Integer pence. Indexes on every foreign key plus the catalogue sort and filter columns, a GIN
