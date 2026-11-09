@@ -39,7 +39,7 @@ export function CatalogueResults({
             <FilterSheet>
               <FilterGroups model={model} />
             </FilterSheet>
-            <SortControl pathname={model.pathname} filters={model.filters} />
+            <SortControl pathname={model.pathname} filters={model.filters} query={model.query} />
           </div>
         </div>
         <ResultsGrid products={products} empty={empty} />
@@ -48,6 +48,7 @@ export function CatalogueResults({
           filters={model.filters}
           page={page}
           pageCount={pageCount}
+          query={model.query}
         />
       </div>
     </div>

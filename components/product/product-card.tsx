@@ -61,7 +61,7 @@ export function ProductCard({
           )}
         </div>
         <div className={productCardBodyClass}>
-          <h3 className={productCardTitleClass}>{product.title}</h3>
+          <h3 className={productCardTitleClass} data-testid="result-title">{product.title}</h3>
           <div className={productCardRatingClass}>
             <StarRating rating={product.ratingAverage} count={product.reviewCount} />
             <span aria-hidden="true" className="tnum text-small text-muted-foreground">

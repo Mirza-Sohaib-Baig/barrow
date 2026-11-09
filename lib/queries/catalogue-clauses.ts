@@ -288,7 +288,7 @@ export function buildSuggestionSql(raw: string): SQL | null {
 
   const limit = config.suggestionLimit;
   return sql`
-    select kind, label, slug
+    select kind, label, slug, image, price_in_pence
     from (
       (
         select 'product'::text as kind,
@@ -297,7 +297,9 @@ export function buildSuggestionSql(raw: string): SQL | null {
                greatest(
                  similarity(${products.title}, ${term}),
                  word_similarity(${term}, ${products.title})
-               ) as score
+               ) as score,
+               ${products.imageUrls}->>0 as image,
+               ${products.priceInPence} as price_in_pence
         from ${products}
         where ${products.title} % ${term} or ${term} <% ${products.title}
         order by score desc
@@ -311,7 +313,9 @@ export function buildSuggestionSql(raw: string): SQL | null {
                greatest(
                  similarity(${categories.name}, ${term}),
                  word_similarity(${term}, ${categories.name})
-               )
+               ),
+               cast(null as text),
+               cast(null as integer)
         from ${categories}
         where ${categories.name} % ${term} or ${term} <% ${categories.name}
         order by 4 desc
@@ -325,7 +329,9 @@ export function buildSuggestionSql(raw: string): SQL | null {
                max(greatest(
                  similarity(${products.brand}, ${term}),
                  word_similarity(${term}, ${products.brand})
-               ))
+               )),
+               cast(null as text),
+               cast(null as integer)
         from ${products}
         where ${products.brand} % ${term} or ${term} <% ${products.brand}
         group by ${products.brand}

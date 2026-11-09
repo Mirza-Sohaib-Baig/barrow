@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { focusRingClass } from "@/components/product/metrics";
 import { catalogueHref, type CatalogueFilters } from "@/lib/catalogue";
+import { withSearchQuery } from "@/lib/search-params";
 import { cn } from "@/lib/utils";
 
 function pageLinkClass(disabled: boolean) {
@@ -16,16 +17,18 @@ export function Pagination({
   filters,
   page,
   pageCount,
+  query,
 }: {
   pathname: string;
   filters: CatalogueFilters;
   page: number;
   pageCount: number;
+  query?: string;
 }) {
   if (pageCount <= 1) return null;
 
-  const previous = page > 1 ? catalogueHref(pathname, filters, { page: page - 1 }) : null;
-  const next = page < pageCount ? catalogueHref(pathname, filters, { page: page + 1 }) : null;
+  const previous = page > 1 ? withSearchQuery(catalogueHref(pathname, filters, { page: page - 1 }), query) : null;
+  const next = page < pageCount ? withSearchQuery(catalogueHref(pathname, filters, { page: page + 1 }), query) : null;
 
   return (
     <nav aria-label="Pagination" className="flex items-center justify-between gap-4">

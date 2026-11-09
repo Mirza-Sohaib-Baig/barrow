@@ -6,6 +6,7 @@ import {
   type CatalogueFilters,
 } from "@/lib/catalogue";
 import { config } from "@/lib/config";
+import { withSearchQuery } from "@/lib/search-params";
 import { cn } from "@/lib/utils";
 
 export type FilterModel = {
@@ -15,6 +16,7 @@ export type FilterModel = {
   ratings: { minRating: number; count: number }[];
   departments: { href: string; name: string; count: number | null; current: boolean }[];
   parent: { href: string; label: string } | null;
+  query?: string;
 };
 
 function optionClass(active: boolean) {
@@ -27,6 +29,8 @@ function optionClass(active: boolean) {
 
 export function FilterGroups({ model }: { model: FilterModel }) {
   const { pathname, filters } = model;
+  const hrefFor = (patch: Parameters<typeof catalogueHref>[2]) =>
+    withSearchQuery(catalogueHref(pathname, filters, patch), model.query);
   const shownBrands = model.brands.slice(0, 12);
   const selectedMissing = filters.brands.filter(
     (brand) => !shownBrands.some((entry) => entry.name === brand),
@@ -68,9 +72,7 @@ export function FilterGroups({ model }: { model: FilterModel }) {
         <ul className="flex flex-col">
           {config.priceBands.map((band) => {
             const active = filters.minPrice === band.minPrice && filters.maxPrice === band.maxPrice;
-            const href = catalogueHref(
-              pathname,
-              filters,
+            const href = hrefFor(
               active
                 ? { minPrice: null, maxPrice: null, page: 1 }
                 : { minPrice: band.minPrice, maxPrice: band.maxPrice, page: 1 },
@@ -92,7 +94,7 @@ export function FilterGroups({ model }: { model: FilterModel }) {
           <ul className="flex flex-col">
             {shownBrands.map((brand) => {
               const active = filters.brands.includes(brand.name);
-              const href = catalogueHref(pathname, filters, {
+              const href = hrefFor({
                 brands: toggleBrand(filters, brand.name),
                 page: 1,
               });
@@ -106,7 +108,7 @@ export function FilterGroups({ model }: { model: FilterModel }) {
               );
             })}
             {selectedMissing.map((brand) => {
-              const href = catalogueHref(pathname, filters, {
+              const href = hrefFor({
                 brands: toggleBrand(filters, brand),
                 page: 1,
               });
@@ -128,11 +130,7 @@ export function FilterGroups({ model }: { model: FilterModel }) {
           {model.ratings.map((rating) => {
             const active = filters.minRating === rating.minRating;
             const label = rating.minRating === 1 ? "1 star and up" : `${rating.minRating} stars and up`;
-            const href = catalogueHref(
-              pathname,
-              filters,
-              active ? { minRating: null, page: 1 } : { minRating: rating.minRating, page: 1 },
-            );
+            const href = hrefFor(active ? { minRating: null, page: 1 } : { minRating: rating.minRating, page: 1 });
             return (
               <li key={rating.minRating}>
                 <Link
@@ -153,7 +151,7 @@ export function FilterGroups({ model }: { model: FilterModel }) {
       <section className="flex flex-col gap-2">
         <h3 className="text-h3">Availability</h3>
         <Link
-          href={catalogueHref(pathname, filters, { inStock: !filters.inStock, page: 1 })}
+          href={hrefFor({ inStock: !filters.inStock, page: 1 })}
           aria-current={filters.inStock ? "true" : undefined}
           className={optionClass(filters.inStock)}
         >

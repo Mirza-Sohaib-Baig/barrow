@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { focusRingClass } from "@/components/product/metrics";
 import { catalogueHref, sortChoices, type CatalogueFilters } from "@/lib/catalogue";
+import { withSearchQuery } from "@/lib/search-params";
 import { cn } from "@/lib/utils";
 
 export function SortControl({
   pathname,
   filters,
+  query,
 }: {
   pathname: string;
   filters: CatalogueFilters;
+  query?: string;
 }) {
   return (
     <nav aria-label="Sort" className="flex flex-wrap gap-2">
@@ -17,7 +20,7 @@ export function SortControl({
         return (
           <Link
             key={choice.sort}
-            href={catalogueHref(pathname, filters, { sort: choice.sort, page: 1 })}
+            href={withSearchQuery(catalogueHref(pathname, filters, { sort: choice.sort, page: 1 }), query)}
             aria-current={active ? "true" : undefined}
             className={cn(
               "inline-flex min-h-10 items-center rounded-lg border border-border px-3 text-small",

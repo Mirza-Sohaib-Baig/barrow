@@ -93,7 +93,7 @@ export type HomeData = {
 };
 
 export type Suggestion =
-  | { kind: "product"; label: string; slug: string }
+  | { kind: "product"; label: string; slug: string; image: string | null; priceInPence: number }
   | { kind: "category"; label: string; slug: string }
   | { kind: "brand"; label: string; slug: null };
 
@@ -433,7 +433,14 @@ export async function getSuggestions(q: string): Promise<Suggestion[]> {
     const slug = readText(row.slug);
     if (!slug) continue;
     if (row.kind === "product") {
-      suggestions.push({ kind: "product", label, slug });
+      const price = typeof row.price === "number" || typeof row.price === "string" ? Number(row.price) : 0;
+      suggestions.push({
+        kind: "product",
+        label,
+        slug,
+        image: readText(row.image),
+        priceInPence: Number.isInteger(price) && price >= 0 ? price : 0,
+      });
       continue;
     }
     if (row.kind === "category") {
@@ -479,11 +486,19 @@ function facetRows(result: unknown): FacetRow[] {
   return rows;
 }
 
-function suggestionRows(result: unknown): { kind: string; label: unknown; slug: unknown }[] {
-  const rows: { kind: string; label: unknown; slug: unknown }[] = [];
+function suggestionRows(
+  result: unknown,
+): { kind: string; label: unknown; slug: unknown; image: unknown; price: unknown }[] {
+  const rows: { kind: string; label: unknown; slug: unknown; image: unknown; price: unknown }[] = [];
   for (const value of resultRows(result)) {
     if (!isRecord(value) || typeof value.kind !== "string") continue;
-    rows.push({ kind: value.kind, label: value.label, slug: value.slug });
+    rows.push({
+      kind: value.kind,
+      label: value.label,
+      slug: value.slug,
+      image: value.image,
+      price: value.price_in_pence,
+    });
   }
   return rows;
 }

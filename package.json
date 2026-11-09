@@ -12,7 +12,7 @@
     "e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "tsx scripts/seed.ts",
+    "db:seed": "node --env-file=.env.local --import tsx scripts/seed.ts",
     "import": "node --env-file=.env.local --import tsx scripts/import/index.ts"
   },
   "dependencies": {

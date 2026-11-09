@@ -1,6 +1,7 @@
 import { Fraunces, Geist } from "next/font/google";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/shell/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { config } from "@/lib/config";
 import "./globals.css";
@@ -32,7 +33,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            {children}
+            <Toaster />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

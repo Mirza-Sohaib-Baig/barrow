@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { HeartIcon, ShoppingBagIcon } from "lucide-react";
+import { HeartIcon } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { AccountMenu } from "@/components/shell/account-menu";
+import { CartButton } from "@/components/shell/cart-button";
 import { SearchForm } from "@/components/shell/search-form";
 import { ThemeToggle } from "@/components/shell/theme-toggle";
 import { Button } from "@/components/ui/button";
 
-export function Header({ cartCount }: { cartCount: number }) {
-  const cartLabel = `Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`;
-
+export function Header() {
   return (
     <header className="border-b border-border bg-background">
       <div className="mx-auto grid w-full max-w-[1280px] grid-cols-[auto_1fr] items-center gap-x-2 gap-y-3 px-4 py-3 md:grid-cols-[auto_minmax(0,1fr)_auto] md:gap-4 md:px-6 lg:px-8">
@@ -31,18 +30,7 @@ export function Header({ cartCount }: { cartCount: number }) {
           >
             <HeartIcon />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative size-10"
-            nativeButton={false}
-            render={<Link href="/cart" aria-label={cartLabel} />}
-          >
-            <ShoppingBagIcon />
-            <span className="tnum absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-small leading-none text-background">
-              {cartCount}
-            </span>
-          </Button>
+          <CartButton />
         </div>
       </div>
     </header>
