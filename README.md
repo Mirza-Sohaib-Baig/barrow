@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Barrow is a shop for beauty, handmade goods, music and gifts. It is a portfolio rebuild of a buying experience, unaffiliated with Amazon, and its catalogue comes from a public research dataset.
 
 ## Getting Started
 

@@ -13,7 +13,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx scripts/seed.ts",
-    "import": "tsx scripts/import/index.ts"
+    "import": "node --env-file=.env.local --import tsx scripts/import/index.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

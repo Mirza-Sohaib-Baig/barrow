@@ -17,7 +17,7 @@ Five minutes, camera on, screen shared. Rehearse once, record the second take, d
 
 | Time | Screen | What you say | What you click |
 | --- | --- | --- | --- |
-| 0:00 to 0:20 | You, then home | Who you are. Then the framing: a department store rebuilt around the two things Amazon is worst at, trusting what you read and getting out of checkout | Nothing |
+| 0:00 to 0:20 | You, then home | Who you are. Then the framing: a shop for beauty, handmade goods, music and gifts, rebuilt around the two things Amazon is worst at, trusting what you read and getting out of checkout | Nothing |
 | 0:20 to 0:45 | Home | What you built first and why: the buying loop, because a store that cannot sell is not a store. Name the catalogue: real products and real reviews from a public research dataset, so nothing on screen is invented. Name one cut out loud, the seller side | Scroll once, slowly |
 | 0:45 to 1:15 | Search | Type a partial query, show typeahead, search, apply two filters, change the sort. Say filters live in the URL so every view is linkable | Type, filter, sort |
 | 1:15 to 1:50 | Product page | Gallery, then the specs tab, then the variant picker changing price and image. Say what Amazon gets wrong here: unavailable combinations disappear instead of showing as unavailable | Switch a variant |

@@ -77,7 +77,7 @@ Order status is derived, not stored. `lib/order-status.ts` maps order age to PLA
 SHIPPED, OUT_FOR_DELIVERY, DELIVERED, with `cancelledAt` and return state as overrides. Unit
 tested at every boundary.
 
-### Step-04: catalogue import `[pending]`
+### Step-04: catalogue import `[done]`
 Runs unattended alongside Step-02 and the A slices. `scripts/import/` with fetch, transform, load
 and topics. Amazon Reviews 2023 dataset, 8 categories, capped at 1,200 products each, 3 or more
 reviews required, up to 25 reviews kept per product, reviewer identities not imported. Target

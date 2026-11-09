@@ -99,3 +99,14 @@ A running log of what was chosen, what was cut, and why. Newest at the bottom wi
 - When a category is empty, the named filter is the price band, then a brand, then the star rating, then in-stock. The clear link removes only that one. Sort defaults to `relevance`, shown as "Featured", and is left out of the URL.
 - Product photos may come from any http or https host. The import has not named its image hosts yet.
 
+## 2026-11-09, catalogue import
+
+- The `datarepo.eng.ucsd.edu` paths in `DATA.md` return 404. The import downloads the same Amazon Reviews 2023 files from `https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/`.
+- Arts and Toys review files are about 1.0 GB and 1.9 GB, so they stay out. The four core categories are the catalogue.
+- The shell departments are Beauty, Handmade, Music and Gift cards, matching those categories.
+- Dataset prices are stored as pounds with no conversion. Reviewer ids are never read into the import. Display names are generated. An empty description falls back to the bullets, then the title.
+- The import replaces the catalogue tables. It uses the Neon websocket pool, because the HTTP driver cannot run the batch transactions.
+- The 25-review cap on this selection produced 96,159 reviews, above the 80,000 figure in the prompt. The cap stayed at 25 so the kept reviews are the ones the prompt asked for.
+- A review image may be the thumbnail when the larger images are missing. A bad JSONL line is counted and skipped. Text is stored without null bytes, and a cut never splits an emoji in half, because Postgres rejects that inside a JSON value.
+
+
