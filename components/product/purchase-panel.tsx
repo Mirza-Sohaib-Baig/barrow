@@ -192,6 +192,11 @@ export function PurchasePanel({
       try {
         const result = await startBuyNow({ productId, quantity: selected });
         if (!result.ok) {
+          if (result.error === "Sign in to buy now.") {
+            const next = `${window.location.pathname}${window.location.search}`;
+            router.push(`/signin?next=${encodeURIComponent(next)}`);
+            return;
+          }
           toast.error(result.error);
           return;
         }

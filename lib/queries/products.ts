@@ -1,5 +1,5 @@
 import { cacheLife, cacheTag } from "next/cache";
-import { and, asc, count, eq, isNull, ne, sql } from "drizzle-orm";
+import { and, count, eq, ne, sql } from "drizzle-orm";
 import { categories, products } from "@/drizzle/schema";
 import { config } from "@/lib/config";
 import { db } from "@/lib/db";
@@ -184,16 +184,44 @@ async function readCategoryRail(slug: string, limit: number): Promise<ProductCar
 }
 
 async function readTopCategories(): Promise<HomeCategoryTile[]> {
-  return db
-    .select({
-      id: categories.id,
-      name: categories.name,
-      slug: categories.slug,
-      imageUrl: categories.imageUrl,
-    })
-    .from(categories)
-    .where(isNull(categories.parentId))
-    .orderBy(asc(categories.sortOrder), asc(categories.name));
+  // categories.image_url is unset. The cover is the highest-rated product in the department tree.
+  const result = await db.execute(sql`
+    select
+      parent.id,
+      parent.name,
+      parent.slug,
+      coalesce(parent.image_url, cover.image) as image_url
+    from categories as parent
+    left join lateral (
+      select product.image_urls->>0 as image
+      from products as product
+      where product.category_id in (
+        with recursive tree as (
+          select parent.id as id
+          union all
+          select child.id
+          from categories as child
+          inner join tree on child.parent_id = tree.id
+        )
+        select tree.id from tree
+      )
+      order by product.rating_average desc, product.review_count desc, product.id asc
+      limit 1
+    ) as cover on true
+    where parent.parent_id is null
+    order by parent.sort_order asc, parent.name asc
+  `);
+
+  const tiles: HomeCategoryTile[] = [];
+  for (const value of resultRows(result)) {
+    if (!isRecord(value)) continue;
+    const id = readText(value.id);
+    const name = readText(value.name);
+    const slug = readText(value.slug);
+    if (!id || !name || !slug) continue;
+    tiles.push({ id, name, slug, imageUrl: readText(value.image_url) });
+  }
+  return tiles;
 }
 
 export async function getProductCards(opts: ProductCardOptions): Promise<ProductCardPage> {

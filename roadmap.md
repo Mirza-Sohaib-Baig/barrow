@@ -114,7 +114,7 @@ Home with hero, category tiles, deals rail, recently viewed, one rail per catego
 below the fold lazy and inside its own Suspense boundary. Category browse at `/c/[...slug]` with
 breadcrumb, sidebar, grid, sort, pagination. All filter state in searchParams.
 
-### A5: search `[pending]`
+### A5: search `[done]`
 Typeahead combobox with full keyboard support, debounced at 150ms. Results page reusing the
 sidebar and grid. Applied-filter chip bar. Honest result count. No-results state with suggested
 alternatives. `/` focuses search. Playwright test for filter and sort surviving a reload.
@@ -126,30 +126,30 @@ phone.
 
 ## Set B: the buying loop
 
-### B1: product detail `[pending]`
+### B1: product detail `[done]`
 Gallery, details column with Overview, Specs and Reviews tabs as URL state, sticky purchase
 panel. Rating histogram filtering the review list. Related products. `generateMetadata`,
 `not-found`, `loading`. View recorded in `viewHistory`.
 
-### B2: cart and wishlist `[pending]`
+### B2: cart and wishlist `[done]`
 `lib/cart-session.ts` cookie for guests. `lib/pricing.ts` as a pure, unit-tested function.
 `lib/queries/cart.ts`, `actions/cart.ts`, `actions/wishlist.ts`. Cart drawer, cart page with
 saved for later, free shipping bar. Optimistic updates with rollback and toasts.
 
-### B3: accounts and sessions `[pending]`
+### B3: accounts and sessions `[done]`
 Hand-rolled email and password. bcrypt, signed JWT via jose in an httpOnly cookie, session rows
 in the database. Sign in, sign up, middleware on `/account`, `/orders`, `/checkout`. Demo account
 button, seeded with an address and three orders at different ages. Cart merge on sign in with
 quantity collision handling. Unit tests for session signing and the merge.
 
-### B4: Stripe checkout `[pending]`
+### B4: Stripe checkout `[done]`
 One-page checkout with live summary. Address, shipping speed with real computed dates, Stripe
 Payment Element. PaymentIntent created from the server-computed total. `placeOrder` re-reads the
 PaymentIntent, verifies status and amount, re-checks stock, then in one transaction creates the
 order with snapshots, decrements stock, clears the cart. No upsells anywhere. Playwright test
 from product page to created order with the test card.
 
-### B5: buy now `[pending]`
+### B5: buy now `[done]`
 Single-item checkout context keyed in the session, leaving the real cart untouched. Test that it
 does.
 

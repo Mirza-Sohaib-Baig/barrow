@@ -48,7 +48,7 @@ export function CartExperience({ cart, saved }: { cart: CartView; saved: CartLin
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
             <section>
               <h1 className="text-h1">Your cart</h1>
-              <ul className="mt-6 divide-y divide-border">
+              <ul aria-label="Cart items" className="mt-6 divide-y divide-border">
                 {state.lines.map((line) => (
                   <CartLineRow
                     key={line.id}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense, type ReactNode } from "react";
 import { Gallery } from "@/components/product/gallery";
 import { focusRingClass } from "@/components/product/metrics";
@@ -61,6 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 async function ProductView({ params, searchParams }: PageProps) {
+  await connection();
   const [{ slug }, raw] = await Promise.all([params, searchParams]);
   const product = await getProductBySlug(slug);
   if (!product) notFound();

@@ -16,8 +16,14 @@ function secretKey(secret: string): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
+export function authSecret(): string | undefined {
+  const secret = process.env.AUTH_SECRET ?? process.env.SESSION_SECRET;
+  if (!secret) return undefined;
+  return secret;
+}
+
 function requireAuthSecret(): string {
-  const secret = process.env.AUTH_SECRET;
+  const secret = authSecret();
   if (!secret) throw new Error("AUTH_SECRET is not set");
   return secret;
 }
@@ -130,7 +136,7 @@ export async function createSession(user: { id: string; name: string }): Promise
 }
 
 export async function getSession(): Promise<SessionUser | null> {
-  const secret = process.env.AUTH_SECRET;
+  const secret = authSecret();
   if (!secret) return null;
 
   const jar = await cookieJar();
@@ -159,7 +165,7 @@ export async function getSession(): Promise<SessionUser | null> {
 }
 
 export async function destroySession(): Promise<void> {
-  const secret = process.env.AUTH_SECRET;
+  const secret = authSecret();
   if (secret) {
     const jar = await cookieJar();
     const token = jar.get(sessionCookieName)?.value;

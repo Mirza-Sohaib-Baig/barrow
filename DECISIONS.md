@@ -109,4 +109,19 @@ A running log of what was chosen, what was cut, and why. Newest at the bottom wi
 - The 25-review cap on this selection produced 96,159 reviews, above the 80,000 figure in the prompt. The cap stayed at 25 so the kept reviews are the ones the prompt asked for.
 - A review image may be the thumbnail when the larger images are missing. A bad JSONL line is counted and skipped. Text is stored without null bytes, and a cut never splits an emoji in half, because Postgres rejects that inside a JSON value.
 
+## 2026-11-09, category tiles
+
+- Department tiles take the first image of the highest-rated product in that department, including products filed on its subcategories. A stored `categories.image_url` still wins. Ties follow the product rail: rating, then review count, then id.
+
+## 2026-11-09, checkout
+
+- Checkout goes from the cart to one page and then the order. No upsells, no cross-sells, no interstitial.
+- Buy now is a 30-minute signed cookie bound to the session id. It never writes a cart row.
+- `placeOrder` uses a short-lived Neon websocket transaction. The HTTP driver used for reads cannot run one.
+- Session signing accepts `SESSION_SECRET` when `AUTH_SECRET` is unset, because that is the name in `.env.example`.
+- Playwright specs stay out of `npm test`. That script is the unit suite. `npm run e2e` runs the browser tests.
+- PaymentIntents use Stripe automatic payment methods. This API version rejects `payment_method_types`. The Payment Element matches that, and the shopper picks the card.
+- The Payment Element does not collect billing details. Confirmation sends the account email, the delivery address, and an empty state, because a UK address has no county field and Stripe still requires one.
+- Playwright uses `http://localhost:3000`. `127.0.0.1` is in `allowedDevOrigins` so the dev server will serve its scripts to that host too.
+
 

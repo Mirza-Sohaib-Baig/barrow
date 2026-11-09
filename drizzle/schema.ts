@@ -197,7 +197,7 @@ export const orders = pgTable(
     totalInPence: integer("total_in_pence").notNull(),
     shippingOption: text("shipping_option").notNull(),
     shippingAddress: jsonb("shipping_address").$type<AddressSnapshot>().notNull(),
-    paymentIntentId: text("payment_intent_id").notNull(),
+    paymentIntentId: text("payment_intent_id").notNull().unique(),
     paymentLast4: text("payment_last4").notNull(),
     placedAt: timestampColumn("placed_at").notNull(),
     cancelledAt: timestampColumn("cancelled_at"),
